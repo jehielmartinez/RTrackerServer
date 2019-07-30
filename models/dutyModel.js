@@ -20,6 +20,11 @@ let dutySchema = new mongoose.Schema({
     month: {
         type: String,
         trim: true
+    },
+    status: {
+        type: String,
+        trim: true,
+        default: 'pending'
     }
 })
 

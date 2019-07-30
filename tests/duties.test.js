@@ -9,11 +9,12 @@ beforeEach(async() => {
 
 test('Should create a new Duty', async() => {
     const resp = await request(app).post('/api/new-duty').send({
-        description: 'Duty Test',
+        description: 'New Duty Test',
         amount: 555,
         notes: 'This is a Test',
         quarter: 'firstQ',
-        month: '01'
+        month: '01',
+        status: 'pending'
     }).expect(201)
 
     const duty = await Duty.findById(resp.body._id)

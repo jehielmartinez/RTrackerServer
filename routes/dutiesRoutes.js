@@ -10,6 +10,7 @@ router.post('/new-duty', async (req, res) => {
     try {
         await duty.save()
         res.status(201).send(duty)
+        console.log(`new duty created: ${duty.description}`)
     } catch (error) {
         res.status(400).send(error)
     }
