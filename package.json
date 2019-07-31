@@ -8,7 +8,7 @@
     "test": "env-cmd -f ./config/test.env jest --detectOpenHandles",
     "dev": "env-cmd -f ./config/dev.env node server.js "
   },
-  "jest":{
+  "jest": {
     "testEnvironment": "node"
   },
   "author": "Jehiel Martinez",
@@ -16,6 +16,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "moment": "^2.24.0",
     "mongoose": "^5.6.7"
   },
   "devDependencies": {
