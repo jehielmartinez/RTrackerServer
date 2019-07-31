@@ -39,3 +39,13 @@ test('Should get Duty1 by Id', async() => {
         .expect(200, {...duty1, __v:0})
 
 })
+
+test('Should edit quarter from Duty1', async() => {
+    await request(app)
+        .patch(`/api/edit-duty/${duty1._id}`)
+        .send({quarter: 'lastQ'})
+        .expect(200)
+    
+    const duty = await Duty.findById(duty1._id)
+    expect(duty.quarter).not.toBe(duty1.quarter)
+})
