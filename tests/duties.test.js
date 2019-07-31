@@ -49,3 +49,13 @@ test('Should edit quarter from Duty1', async() => {
     const duty = await Duty.findById(duty1._id)
     expect(duty.quarter).not.toBe(duty1.quarter)
 })
+
+test('Should delete Duty1', async() => {
+    await request(app)
+        .delete(`/api/delete-duty/${duty1._id}`)
+        .send()
+        .expect(200)
+    
+    const duty = await Duty.findById(duty1._id)
+    expect(duty).toBeNull()
+})
