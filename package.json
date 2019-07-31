@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "env-cmd -f ./config/test.env jest",
+    "test": "env-cmd -f ./config/test.env jest --detectOpenHandles",
     "dev": "env-cmd -f ./config/dev.env node server.js "
   },
   "jest":{
