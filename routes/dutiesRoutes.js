@@ -15,6 +15,7 @@ router.post('/new-duty', async (req, res) => {
     }
 })
 
+//GET ONE DUTY BY ID
 router.get('/get-duty/:id', async(req, res) => {
     try {
         const duty = await Duty.findById(req.params.id)
@@ -24,6 +25,7 @@ router.get('/get-duty/:id', async(req, res) => {
     }
 })
 
+//EDIT DUTY
 router.patch('/edit-duty/:id', async (req, res) => {
     try {
         await Duty.findByIdAndUpdate(req.params.id, req.body)
@@ -33,6 +35,7 @@ router.patch('/edit-duty/:id', async (req, res) => {
     }
 })
 
+//DELETE DUTY
 router.delete('/delete-duty/:id', async (req, res) => {
     try {
         await Duty.findByIdAndDelete(req.params.id)
