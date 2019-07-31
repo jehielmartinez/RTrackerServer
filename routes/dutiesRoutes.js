@@ -45,4 +45,14 @@ router.delete('/delete-duty/:id', async (req, res) => {
     }
 })
 
+//GET DUTIES BY month AND monthHalf
+router.get('/get-duties', async (req, res) => {
+    try {
+        const duties = await Duty.find({month : req.query.month, monthHalf: req.query.half})
+        res.status(200).send(duties)
+    } catch (error) {
+        res.status(404).send(error)
+    }
+})
+
 module.exports = router
