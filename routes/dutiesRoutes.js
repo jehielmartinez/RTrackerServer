@@ -16,9 +16,9 @@ router.post('/new-duty', async (req, res) => {
     }
 })
 
-router.get('/get-duty', async(req, res) => {
+router.get('/get-duty/:id', async(req, res) => {
     try {
-        const duty = await Duty.findById(req.body.id)
+        const duty = await Duty.findById(req.params.id)
         res.status(200).send(duty)
     } catch (error) {
         res.status(404).send(error)
