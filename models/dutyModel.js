@@ -13,7 +13,7 @@ let dutySchema = new mongoose.Schema({
         type: String,
         trim: true
     },
-    quarter: {
+    monthHalf: {
         type: String,
         trim: true
     },
