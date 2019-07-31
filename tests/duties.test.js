@@ -37,7 +37,7 @@ const duties = [
         amount: 444,
         notes: 'array of duties for testing',
         monthHalf: 'firstH',
-        month: '02',
+        month: '01',
         status: 'pending',
     },
     {
@@ -111,4 +111,18 @@ test('Should delete Duty1', async() => {
     
     const duty = await Duty.findById(duty1._id)
     expect(duty).toBeNull()
+})
+
+test('Should return month & half duties', async() => {
+    const response1 = await request(app)
+                        .get(`/api/get-duties?month=01&half=firstH`)
+                        .send()
+                        .expect(200)
+    expect(response1.body.length).toBe(3)
+
+    const response2 = await request(app)
+                        .get(`/api/get-duties?month=02&half=firstH`)
+                        .send()
+                        .expect(200)
+    expect(response2.body.length).toBe(1)
 })
