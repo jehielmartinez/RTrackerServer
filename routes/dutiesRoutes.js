@@ -10,7 +10,6 @@ router.post('/new-duty', async (req, res) => {
     try {
         await duty.save()
         res.status(201).send(duty)
-        console.log(`new duty created: ${duty.description}`)
     } catch (error) {
         res.status(400).send(error)
     }
@@ -25,10 +24,19 @@ router.get('/get-duty/:id', async(req, res) => {
     }
 })
 
-router.patch('/edit-duty', async (req, res) => {
+router.patch('/edit-duty/:id', async (req, res) => {
     try {
-        const duty = Duty.findByIdAndUpdate(req.body._id, req.body)
-        res.status(200).send(duty)
+        await Duty.findByIdAndUpdate(req.params.id, req.body)
+        res.status(200).send()
+    } catch (error) {
+        res.status(404).send(error)
+    }
+})
+
+router.delete('/delete-duty/:id', async (req, res) => {
+    try {
+        await Duty.findByIdAndDelete(req.params.id)
+        res.status(200).send()
     } catch (error) {
         res.status(404).send(error)
     }
