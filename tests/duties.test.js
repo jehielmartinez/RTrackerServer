@@ -113,7 +113,7 @@ test('Should delete Duty1', async() => {
     expect(duty).toBeNull()
 })
 
-test('Should return month & half duties', async() => {
+test('Should return month & half queries duties', async() => {
     const response1 = await request(app)
                         .get(`/api/get-duties?month=01&half=firstH`)
                         .send()
