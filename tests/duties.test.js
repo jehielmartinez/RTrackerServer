@@ -2,6 +2,7 @@ const request = require('supertest')
 const app = require('../app')
 const Duty = require('../models/dutyModel')
 const mongoose = require('mongoose')
+const moment = require('moment')
 
 const duty1 = {
     _id: new mongoose.Types.ObjectId().toHexString(),
@@ -101,6 +102,8 @@ test('Should edit monthHalf from Duty1', async() => {
     
     const duty = await Duty.findById(duty1._id)
     expect(duty.monthHalf).not.toBe(duty1.monthHalf)
+    expect(duty.monthHalf).toBe('lastH')
+
 })
 
 test('Should delete Duty1', async() => {
@@ -125,4 +128,26 @@ test('Should return month & half queries duties', async() => {
                         .send()
                         .expect(200)
     expect(response2.body.length).toBe(1)
+})
+
+test('Should clone duties to current month', async() => {
+    const prevMonth = '01'
+    const currentMonth = moment().format('MM')
+
+    await request(app)
+        .get(`/api/clone-duties?prevMonth=${prevMonth}`)
+        .send()
+        .expect(200)
+    
+    
+    const prevMonthDuties = await Duty.find({month: prevMonth})
+    const currentMonthDuties = await Duty.find({month: currentMonth})
+
+    expect(prevMonthDuties[0].description).toBe(currentMonthDuties[0].description)
+    expect(prevMonthDuties[0].amount).toBe(currentMonthDuties[0].amount)
+    expect(prevMonthDuties[0].notes).toBe(currentMonthDuties[0].notes)
+    expect(prevMonthDuties[0].monthHalf).toBe(currentMonthDuties[0].monthHalf)
+    
+    expect(currentMonthDuties[0].month).toBe(currentMonth)
+
 })
