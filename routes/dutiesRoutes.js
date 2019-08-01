@@ -29,8 +29,8 @@ router.get('/get-duty/:id', async(req, res) => {
 //EDIT DUTY
 router.patch('/edit-duty/:id', async (req, res) => {
     try {
-        await Duty.findByIdAndUpdate(req.params.id, req.body)
-        res.status(200).send()
+        const editedDuty = await Duty.findByIdAndUpdate(req.params.id, req.body)
+        res.status(200).send(editedDuty)
     } catch (error) {
         res.status(404).send(error)
     }
