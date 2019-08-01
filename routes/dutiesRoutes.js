@@ -46,7 +46,7 @@ router.delete('/delete-duty/:id', async (req, res) => {
     }
 })
 
-//GET DUTIES BY month AND monthHalf
+//GET DUTIES BY month AND monthHalf PASSING IT BY QUERY
 router.get('/get-duties', async (req, res) => {
     try {
         const duties = await Duty.find({month: req.query.month, monthHalf: req.query.half})
@@ -56,22 +56,25 @@ router.get('/get-duties', async (req, res) => {
     }
 })
 
-//TRANSFER PREVIOUS MONTH DUTIES TO CURRENT MONTH
-router.get('/transfer-duties', async(req, res) => {
+//CLONE PREVIOUS MONTH DUTIES TO CURRENT MONTH PASSING PREVMONTH BY QUERY
+router.get('/clone-duties', async(req, res) => {
+    const prevMonth = req.query.prevMonth
     const currentMonth = moment().format('MM')
-    const prevMonth = moment().subtract(1, 'month').format('MM')
+    
     try {
         const prevMonthDuties = await Duty.find({month: prevMonth})
-        await prevMonthDuties.forEach(duty => {
+        const duties = JSON.parse(JSON.stringify(prevMonthDuties))
+
+        duties.forEach(duty => {
             delete duty._id
             delete duty.__v
             duty.month = currentMonth
         })
-        const duties = await Duty.create(prevMonthDuties)
-        res.status(200).send(duties)
+
+        const newDuties = await Duty.create(duties)
+        res.status(200).send(newDuties)
     } catch (error) {
         res.status(400).send(error)
-
     }
 })
 
