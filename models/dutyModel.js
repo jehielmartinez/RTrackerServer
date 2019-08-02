@@ -15,7 +15,8 @@ let dutySchema = new mongoose.Schema({
     },
     monthHalf: {
         type: String,
-        trim: true
+        trim: true,
+        default: 'firstH'
     },
     month: {
         type: String,
